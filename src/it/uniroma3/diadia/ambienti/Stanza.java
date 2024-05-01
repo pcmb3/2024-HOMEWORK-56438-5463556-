@@ -151,16 +151,16 @@ public class Stanza {
 
 	/**
      * Restituisce l'attrezzo nomeAttrezzo se presente nella stanza.
-	 * @param nomeAttrezzo
+	 * @param string
 	 * @return l'attrezzo presente nella stanza.
      * 		   null se l'attrezzo non e' presente.
 	 */
-	public Attrezzo getAttrezzo(String nomeAttrezzo) {
+	public Attrezzo getAttrezzo(String string) {
 		Attrezzo attrezzoCercato;
 		attrezzoCercato = null;
 		for (int i=0; i<this.numeroAttrezzi; i++) {
 			Attrezzo attrezzo = this.attrezzi[i];
-			if (attrezzo.getNome().equals(nomeAttrezzo))
+			if (attrezzo.getNome().equals(string))
 				attrezzoCercato = attrezzo;
 		}
 		return attrezzoCercato;	
