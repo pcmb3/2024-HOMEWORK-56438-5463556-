@@ -1,15 +1,14 @@
 package it.uniroma3.diadia;
 
 
+import java.util.Arrays;
+import java.util.List;
 import java.util.Scanner;
 
 import it.uniroma3.diadia.ambienti.Labirinto;
-import it.uniroma3.diadia.ambienti.Stanza;
-import it.uniroma3.diadia.attrezzi.Attrezzo;
+import it.uniroma3.diadia.ambienti.LabirintoBuilder;
 import it.uniroma3.diadia.comandi.Comando;
 import it.uniroma3.diadia.comandi.FabbricaDiComandiFisarmonica;
-import it.uniroma3.diadia.giocatore.Borsa;
-import it.uniroma3.diadia.giocatore.Giocatore;
 
 /**
  * Classe principale di diadia, un semplice gioco di ruolo ambientato al dia.
@@ -24,7 +23,7 @@ import it.uniroma3.diadia.giocatore.Giocatore;
  */
 
 public class DiaDia {
-	
+
 	static final private String MESSAGGIO_BENVENUTO = ""+
 			"Ti trovi nell'Universita', ma oggi e' diversa dal solito...\n" +
 			"Meglio andare al piu' presto in biblioteca a studiare. Ma dov'e'?\n"+
@@ -34,14 +33,15 @@ public class DiaDia {
 			"puoi raccoglierli, usarli, posarli quando ti sembrano inutili\n" +
 			"o regalarli se pensi che possano ingraziarti qualcuno.\n\n"+
 			"Per conoscere le istruzioni usa il comando 'aiuto'.";
-	
+
 	/*static final private String[] elencoComandi = {"vai", "prendi", "posa", "aiuto", "fine"};*/
 
 	private Partita partita;
 	private IO io;
-	
-	public DiaDia(IO console) {
-		this.partita = new Partita();
+
+
+	public DiaDia(IO console, Labirinto labirinto) {
+		this.partita = new Partita(labirinto);
 		this.io = console;
 	}
 
@@ -66,7 +66,7 @@ public class DiaDia {
 	private boolean processaIstruzione(String istruzione) {
 		Comando comandoDaEseguire;
 		FabbricaDiComandiFisarmonica factory = new FabbricaDiComandiFisarmonica(this.io);
-		
+
 		comandoDaEseguire = factory.costruisciComando(istruzione);
 		comandoDaEseguire.esegui(this.partita);
 		/*if(istruzione.isEmpty()) return false;
@@ -122,12 +122,12 @@ public class DiaDia {
 		io.mostraMessaggio(partita.getLabirinto().getStanzaCorrente().getDescrizione());
 		io.mostraMessaggio(borsa.toString());
 	}*/
-	
+
 	/*private void prendi(String nomeAttrezzo) {
 		Attrezzo a = this.partita.getLabirinto().getStanzaCorrente().getAttrezzo(nomeAttrezzo);
 		this.partita.getLabirinto().getStanzaCorrente().removeAttrezzo(a);
 		this.borsa.addAttrezzo(a);
-		
+
 	}*/
 	/*private void posa(String nomeAttrezzo) {
 		Attrezzo a = this.borsa.getAttrezzo(nomeAttrezzo);
@@ -137,14 +137,36 @@ public class DiaDia {
 	/**
 	 * Comando "Fine".
 	 */
-	
+
 	/*private void fine() {
 		io.mostraMessaggio("Grazie di aver giocato!");  // si desidera smettere
 	}*/
 
 	public static void main(String[] argc) {
 		IO io = new IOConsole();
-		DiaDia gioco = new DiaDia(io);
+		Labirinto labirinto = new LabirintoBuilder()
+				.addStanzaIniziale("Atrio")
+				.addAttrezzo("osso", 1)
+				.addStanza("LabCampusOne")
+				.addStanza("Aula N10")
+				.addAttrezzo("lanterna", 3)
+				.addStanza("Aula N11")
+				.addStanzaVincente("Biblioteca")
+				.addAdiacenza("Atrio", "Aula N11", "est")
+				.addAdiacenza("Atrio", "Aula N10", "sud")
+				.addAdiacenza("Atrio", "LabCampusOne", "ovest")
+				.addAdiacenza("Aula N11", "LabCampusOne", "est")
+				.addAdiacenza("Aula N11", "Atrio", "ovest")
+				.addAdiacenza("Atrio","Biblioteca","nord")
+				.addAdiacenza("Aula N10", "Atrio", "nord")
+				.addAdiacenza("Aula N10", "Aula N11", "est")
+				.addAdiacenza("Aula N10", "LabCampusOne", "ovest")
+				.addAdiacenza("LabCampusOne", "Atrio", "est")
+				.addAdiacenza("LabCampusOne", "Aula N11", "ovest")
+				.getLabirinto();
+		DiaDia gioco = new DiaDia(io, labirinto);
 		gioco.gioca();
+
+
 	}
 }

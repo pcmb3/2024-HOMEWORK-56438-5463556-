@@ -1,31 +1,30 @@
 package it.uniroma3.diadia.ambienti;
-import it.uniroma3.diadia.attrezzi.Attrezzo;
 
 public class Labirinto {
 	private Stanza stanzaVincente;
 	private Stanza stanzaCorrente;
 	
 	public Labirinto(){
-		creaStanze();
-		
+		//creaStanze();
 	}
+	
 	/**
      * Crea tutte le stanze e le porte di collegamento
      */
-    public void creaStanze() {
+		//public void creaStanze() {
 
-		/* crea gli attrezzi */
+		/* crea gli attrezzi 
     	Attrezzo lanterna = new Attrezzo("lanterna",3);
-		Attrezzo osso = new Attrezzo("osso",1);
+		Attrezzo osso = new Attrezzo("osso",1);*/
     	
-		/* crea stanze del labirinto */
+		/* crea stanze del labirinto 
 		Stanza atrio = new Stanza("Atrio");
 		Stanza aulaN11 = new Stanza("Aula N11");
 		Stanza aulaN10 = new Stanza("Aula N10");
 		Stanza laboratorio = new Stanza("Laboratorio Campus");
-		Stanza biblioteca = new Stanza("Biblioteca");
+		Stanza biblioteca = new Stanza("Biblioteca");*/
 		
-		/* collega le stanze */
+		/* collega le stanze 
 		atrio.impostaStanzaAdiacente("nord", biblioteca);
 		atrio.impostaStanzaAdiacente("est", aulaN11);
 		atrio.impostaStanzaAdiacente("sud", aulaN10);
@@ -37,16 +36,20 @@ public class Labirinto {
 		aulaN10.impostaStanzaAdiacente("ovest", laboratorio);
 		laboratorio.impostaStanzaAdiacente("est", atrio);
 		laboratorio.impostaStanzaAdiacente("ovest", aulaN11);
-		biblioteca.impostaStanzaAdiacente("sud", atrio);
+		biblioteca.impostaStanzaAdiacente("sud", atrio);*/
 
-        /* pone gli attrezzi nelle stanze */
+        /* pone gli attrezzi nelle stanze 
 		aulaN10.addAttrezzo(lanterna);
-		atrio.addAttrezzo(osso);
+		atrio.addAttrezzo(osso);*/
 
-		// il gioco comincia nell'atrio
+		/* il gioco comincia nell'atrio
         stanzaCorrente = atrio;  
 		stanzaVincente = biblioteca;
-    }
+    }*/
+    
+	public static LabirintoBuilder newBuilder() {
+		return new LabirintoBuilder();
+	}
 
 	public Stanza getStanzaVincente() {
 		return stanzaVincente;
@@ -59,5 +62,11 @@ public class Labirinto {
 	public Stanza getStanzaCorrente() {
 		return this.stanzaCorrente;
 	}
+
+	public void setStanzaVincente(Stanza sv) {
+		this.stanzaVincente = sv;
+		
+	}
+	
 	
 }

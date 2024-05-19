@@ -17,11 +17,10 @@ public class Partita {
 	private Giocatore giocatore;
 	private boolean finita;
 	
-	public Partita(){
-		labirinto = new Labirinto();
+	public Partita(Labirinto labirinto){
+		this.labirinto = labirinto;
 		this.finita = false;
 		giocatore = new Giocatore();
-		labirinto.creaStanze();
 	}
 	
 	public Labirinto getLabirinto() {
@@ -63,14 +62,6 @@ public class Partita {
 	public Giocatore getGiocatore() {
 		return this.giocatore;
 	}
-
-
-
-	public void setGiocatore(Giocatore giocatore) {
-		this.giocatore = giocatore;
-	}
-
-
-
-
+		
+	
 }
