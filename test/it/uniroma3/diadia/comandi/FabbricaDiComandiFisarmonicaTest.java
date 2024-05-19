@@ -8,6 +8,7 @@ import it.uniroma3.diadia.IO;
 import it.uniroma3.diadia.IOConsole;
 /*verifica il corretto riconoscimento dei comandi*/
 public class FabbricaDiComandiFisarmonicaTest {
+	
 	private IO io = new IOConsole();
 	private FabbricaDiComandiFisarmonica fc = new FabbricaDiComandiFisarmonica(io);
 	private Comando expected;

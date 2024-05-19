@@ -10,8 +10,15 @@ import it.uniroma3.diadia.ambienti.Stanza;
 public class PartitaTest {
 	Labirinto labirinto = new Labirinto();
 	
+	
 	@Test
 	public void testGetStanzaVincente() {
+		this.labirinto = Labirinto.newBuilder()
+				 .addStanzaIniziale("Atrio")
+				 .addAttrezzo("osso", 1)
+				 .addStanzaVincente("Biblioteca")
+				 .addAdiacenza("Atrio", "Biblioteca", "nord")
+				 .getLabirinto();
 		
 		assertEquals("Biblioteca", labirinto.getStanzaVincente().getNome());
 	}
@@ -25,7 +32,13 @@ public class PartitaTest {
 	
 	@Test
 	public void testIsFinita() {
-		Partita partita = new Partita();
+		this.labirinto = Labirinto.newBuilder()
+				 .addStanzaIniziale("Atrio")
+				 .addAttrezzo("osso", 1)
+				 .addStanzaVincente("Biblioteca")
+				 .addAdiacenza("Atrio", "Biblioteca", "nord")
+				 .getLabirinto();
+		Partita partita = new Partita(labirinto);
 		assertFalse(partita.isFinita());
 	}
 }

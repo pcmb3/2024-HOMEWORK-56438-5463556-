@@ -3,39 +3,52 @@ package it.uniroma3.diadia.comandi;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
+import java.util.Arrays;
+
+import org.junit.Before;
 import org.junit.Test;
 
+import it.uniroma3.diadia.IO;
 import it.uniroma3.diadia.IOConsole;
+import it.uniroma3.diadia.IOSimulator;
 import it.uniroma3.diadia.Partita;
 import it.uniroma3.diadia.ambienti.Labirinto;
 import it.uniroma3.diadia.ambienti.Stanza;
-import it.uniroma3.diadia.comandi.ComandoVai;
 
 public class ComandoVaiTest {
-	Stanza s1 = new Stanza("s1");
-	Stanza s2 = new Stanza("s2");
-	ComandoVai comandoVai = new ComandoVai();
-	Partita partita = new Partita();
 	
+	Stanza stanzaIniziale = new Stanza("Atrio");
+    Stanza stanzaAdiacente = new Stanza("Biblioteca");
+	Labirinto labirinto = new Labirinto();
+	IO io = new IOSimulator(Arrays.asList("nord"));
+	ComandoVai comandoVai = new ComandoVai();
+	Partita partita = new Partita(labirinto);
+
+
 	@Test
 	public void testDirezioneInesistente() {
-		comandoVai.setIo(new IOConsole());
-		s1.impostaStanzaAdiacente("sud", s2);
+        comandoVai.setIo(io);
+		stanzaIniziale.impostaStanzaAdiacente("nord", stanzaAdiacente);
+        labirinto.setStanzaCorrente(stanzaIniziale);
+        labirinto.setStanzaVincente(stanzaAdiacente);
+    
 		comandoVai.setParametro("pollo");
 		comandoVai.esegui(partita);
-		assertNotEquals(s2, partita.getLabirinto().getStanzaCorrente());
-		
-	}
-	
-	@Test
-	public void testDirezioneEsistente() {
-		comandoVai.setIo(new IOConsole());
-		partita.getLabirinto().setStanzaCorrente(s1);
-		s1.impostaStanzaAdiacente("sud", s2);
-		comandoVai.setParametro("sud");
-		comandoVai.esegui(partita);
-		assertEquals(s2, partita.getLabirinto().getStanzaCorrente());
-		
+		assertNotEquals(stanzaAdiacente, partita.getLabirinto().getStanzaCorrente());
+
 	}
 
+	@Test
+	public void testDirezioneEsistente() {
+		comandoVai.setIo(io);
+		stanzaIniziale.impostaStanzaAdiacente("nord", stanzaAdiacente);
+        labirinto.setStanzaCorrente(stanzaIniziale);
+        labirinto.setStanzaVincente(stanzaAdiacente);
+        
+		comandoVai.setParametro("nord");
+		comandoVai.esegui(partita);
+		assertEquals(stanzaAdiacente, partita.getLabirinto().getStanzaCorrente());
+
+	}
+	
 }

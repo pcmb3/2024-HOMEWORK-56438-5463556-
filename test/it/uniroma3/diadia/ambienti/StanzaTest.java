@@ -29,4 +29,21 @@ public class StanzaTest {
 		s1.impostaStanzaAdiacente("sud", s2);
 		assertNotNull(s1.getStanzaAdiacente("sud"));
 	}
+	
+	@Test
+	public void testAddAttrezzo() {
+		Stanza stanza = new Stanza("stanza");
+		Attrezzo attrezzo = new Attrezzo("martello", 3);
+		stanza.addAttrezzo(attrezzo);
+		assertTrue(stanza.hasAttrezzo("martello"));
+	}
+	
+	@Test
+	public void testRemoveAttrezzo() {
+		Stanza stanza = new Stanza("stanza");
+		Attrezzo attrezzo = new Attrezzo("martello", 3);
+		stanza.addAttrezzo(attrezzo);
+		stanza.removeAttrezzo(attrezzo);
+		assertFalse(stanza.hasAttrezzo("martello"));
+	}
 }

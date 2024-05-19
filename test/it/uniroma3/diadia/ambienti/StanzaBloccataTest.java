@@ -8,6 +8,7 @@ import org.junit.Test;
 import it.uniroma3.diadia.attrezzi.Attrezzo;
 
 public class StanzaBloccataTest {
+	
 	private String nomeAttSblocca = "chiave";
 	StanzaBloccata s = new StanzaBloccata("stanza", "sud", nomeAttSblocca);
 	Stanza s2 = new Stanza("s2");
@@ -31,6 +32,13 @@ public class StanzaBloccataTest {
 	public void testGetDescrizioneBloccata() {
 		String descrizioneBloccata = "Questa direzione è bloccata! Per sbloccarla devi posare l'attrezzo" + this.nomeAttSblocca + "nella stanza";
 		assertEquals(descrizioneBloccata, s.getDescrizione());
+	}
+	
+	@Test
+	public void testGetDescrizioneSbloccata() {
+		Attrezzo attrezzo = new Attrezzo(nomeAttSblocca,1);
+		s.addAttrezzo(attrezzo);
+		assertEquals(s.toString(), s.getDescrizione());
 	}
 
 }

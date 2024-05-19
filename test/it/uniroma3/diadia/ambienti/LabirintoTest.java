@@ -11,7 +11,12 @@ public class LabirintoTest {
 	
 	@Test
 	public void testGetStanzaVincente() {
-		
+		this.labirinto = Labirinto.newBuilder()
+				 .addStanzaIniziale("Atrio")
+				 .addAttrezzo("osso", 1)
+				 .addStanzaVincente("Biblioteca")
+				 .addAdiacenza("Atrio", "Biblioteca", "nord")
+				 .getLabirinto();
 		assertEquals("Biblioteca", labirinto.getStanzaVincente().getNome());
 	}
 	

@@ -6,6 +6,7 @@ import org.junit.Test;
 import it.uniroma3.diadia.giocatore.Borsa;
 import it.uniroma3.diadia.giocatore.Giocatore;
 
+
 public class GiocatoreTest {
 	Giocatore giocatore = new Giocatore();
 	
