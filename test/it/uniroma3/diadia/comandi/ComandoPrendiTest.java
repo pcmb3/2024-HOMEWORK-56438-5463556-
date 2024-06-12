@@ -1,46 +1,47 @@
 package it.uniroma3.diadia.comandi;
 
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 
+import java.io.FileNotFoundException;
+
+import org.junit.Before;
 import org.junit.Test;
 
-import it.uniroma3.diadia.IOConsole;
+import it.uniroma3.diadia.FormatoFileNonValidoException;
 import it.uniroma3.diadia.Partita;
 import it.uniroma3.diadia.ambienti.Labirinto;
 import it.uniroma3.diadia.ambienti.Stanza;
 import it.uniroma3.diadia.attrezzi.Attrezzo;
-import it.uniroma3.diadia.comandi.ComandoPrendi;
-import it.uniroma3.diadia.giocatore.Borsa;
 
 public class ComandoPrendiTest {
-	
-	Attrezzo attrezzo = new Attrezzo("nomeAttrezzo", 1);
-	Labirinto labirinto = new Labirinto();
-	Partita partita = new Partita(labirinto);
-	Stanza stanza = new Stanza("s");
-	ComandoPrendi prendi = new ComandoPrendi();
-	
-	
-	@Test
-	public void testNessunAttrezzoPreso() {
-		prendi.setIo(new IOConsole());
-		partita.getLabirinto().setStanzaCorrente(stanza);
-		stanza.addAttrezzo(attrezzo);
-		prendi.setParametro("nomeAttrezzo");
-		prendi.esegui(partita);
-		assertNull(partita.getGiocatore().getBorsa().getAttrezzo("inesistente"));
+	private Attrezzo a;
+	private ComandoPrendi comandoPrendi;
+	private Partita par;
+	private Stanza s;
+
+	@Before
+	public void setUp() throws FileNotFoundException, FormatoFileNonValidoException {
+		a = new Attrezzo("nomeAttrezzo", 1);
+		comandoPrendi = new ComandoPrendi();
+		par = new Partita(Labirinto.newBuilder("labirinto.txt").getLabirinto());
+		s = new Stanza("stanza");
+		par.getLabirinto().setStanzaCorrente(s);
 	}
 	
 	@Test
+	public void testNessunAttrezzoPreso() {
+		s.addAttrezzo(a);
+		comandoPrendi.setParametro("nomeAttrezzo");
+		comandoPrendi.esegui(par);
+		assertNull(par.getGiocatore().getBorsa().getAttrezzo("Inesistente"));
+	}
+
+	@Test
 	public void testAttrezzoPreso() {
-		prendi.setIo(new IOConsole());
-		partita.getLabirinto().setStanzaCorrente(stanza);
-		stanza.addAttrezzo(attrezzo);
-		prendi.setParametro("nomeAttrezzo");
-		prendi.esegui(partita);
-		assertNotNull(partita.getGiocatore().getBorsa().getAttrezzo("nomeAttrezzo"));
+		s.addAttrezzo(a);
+		comandoPrendi.setParametro("nomeAttrezzo");
+		comandoPrendi.esegui(par);
+		assertNotNull(par.getGiocatore().getBorsa().getAttrezzo("nomeAttrezzo"));
 	}
 
 }
