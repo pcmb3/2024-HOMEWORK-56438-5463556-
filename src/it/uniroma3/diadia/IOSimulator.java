@@ -4,32 +4,53 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class IOSimulator implements IO {
-    private List<String> messaggiMostrati;
-    private List<String> righeDaLeggere;
-    private int indiceRigheLette;
 
-    public IOSimulator(List<String> righeDaLeggere) {
-        this.messaggiMostrati = new ArrayList<>();
-        this.righeDaLeggere = righeDaLeggere;
-        this.indiceRigheLette = 0;
-    }
+	private List<String> righeLette;
+	private int indiceRigheLette;
 
-    @Override
-    public void mostraMessaggio(String messaggio) {
-        this.messaggiMostrati.add(messaggio);
-    }
+	public List<String> getMessaggiProdotti() {
+		return messaggiProdotti;
+	}
 
-    @Override
-    public String leggiRiga() {
-        if (indiceRigheLette < righeDaLeggere.size()) {
-            return righeDaLeggere.get(indiceRigheLette++);
-        } else {
-            return null; 
-        }
-    }
-    
-    public List<String> getMostraMessaggio(){
-    	return this.messaggiMostrati;
-    }
+	public void setMessaggiProdotti(List<String> messaggiProdotti) {
+		this.messaggiProdotti = messaggiProdotti;
+	}
+
+	//forse si potrebbe inserire una mappa al posto della lista per ricordare ogni riga letta quale messaggi abbia prodotto
+	private List<String> messaggiProdotti;
+	private int indiceMessaggiProdotti;
+	private int indiceMessaggiMostrati;
+
+	public IOSimulator(List<String> righeDaLeggere) {
+		this.righeLette = righeDaLeggere;
+		this.indiceRigheLette = 0;
+		this.indiceMessaggiMostrati = 0;
+		this.messaggiProdotti = new ArrayList<String>();
+	}
+
+	@Override
+	public String leggiRiga() {
+		String riga = null;
+
+		riga = this.righeLette.get(indiceRigheLette);
+		this.indiceRigheLette++;
+		return riga;
+	}
+
+	@Override
+	public void mostraMessaggio(String msg) {
+		this.messaggiProdotti.add(this.indiceMessaggiProdotti, msg);
+		this.indiceMessaggiProdotti++;
+	}
+
+	public String nextMessaggio() {
+		String next = this.messaggiProdotti.get(indiceMessaggiMostrati);
+		this.indiceMessaggiMostrati++;
+		return next;
+	}
+
+	public boolean hasNextMessaggio() {
+		return this.indiceMessaggiMostrati < this.indiceMessaggiProdotti;
+	}
 
 }

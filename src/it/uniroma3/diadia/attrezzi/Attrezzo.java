@@ -49,10 +49,9 @@ public class Attrezzo implements Comparable<Attrezzo>{
 	public String toString() {
 		return this.getNome()+" ("+this.getPeso()+"kg)";
 	}
-
-
-	@Override
-	public int compareTo(Attrezzo a) {
-		return this.getNome().compareTo(a.getNome());
+	
+	public int compareTo(Attrezzo attrezzo) {
+		return this.getNome().compareTo(attrezzo.getNome());
 	}
+
 }
